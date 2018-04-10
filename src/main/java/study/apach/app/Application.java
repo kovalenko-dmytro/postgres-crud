@@ -1,20 +1,22 @@
 package study.apach.app;
 
 import study.apach.controllers.BookController;
-import study.apach.model.entities.Book;
+import study.apach.controllers.MainController;
 
 public class Application {
 
-    InputHelper helper;
+    private InputHelper helper;
     private BookController bookController;
+    private MainController mainController;
 
     public Application() {
         helper = new InputHelper();
         bookController = new BookController();
+        mainController = new MainController();
     }
 
     public void run () {
-        menu();
+        mainController.index();
 
         String input = helper.getOperation("Enter operation: ");
         int currentId = 0;
@@ -26,7 +28,7 @@ public class Application {
                         bookController.getBooks();
                         input = helper.getOperation("Back to index? [index], View book? [id]");
                         if ("index".equals(input)) {
-                            menu();
+                            mainController.index();
                             input = helper.getOperation("Enter operation: ");
                         } else {
                             currentId = Integer.parseInt(input);
@@ -49,19 +51,5 @@ public class Application {
                 }
             }
         }
-    }
-
-
-
-    private void menu() {
-        System.out.println("*****************************************");
-        System.out.println("|            BOOKS INDEX PAGE           |");
-        System.out.println("*****************************************");
-        System.out.println("| Options:                              |");
-        System.out.println("|        'list'.   View list of books   |");
-        System.out.println("|        'create'. Create book          |");
-        System.out.println("|        'exit'.   Exit                 |");
-        System.out.println("*****************************************");
-
     }
 }

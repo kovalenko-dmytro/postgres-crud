@@ -8,23 +8,22 @@ import java.util.List;
 
 public class View {
 
-    private List<Object> data = new ArrayList<>();
+    private Collection<Object> dataCollection = new ArrayList<>();
     private Representable representable;
 
     public View(Representable representable) {
         this.representable = representable;
     }
 
-    public void setData(Object entity) {
-        data.add(entity);
+    public void setData(Object data) {
+        if (data instanceof Collection) {
+        dataCollection.addAll((Collection<?>) data);
+        } else {
+            dataCollection.add(data);
+        }
     }
-
-    public void setData(List<Object> data) {
-        this.data.addAll(data);
-    }
-
 
     public void render() {
-        representable.render(data);
+        representable.render(dataCollection);
     }
 }

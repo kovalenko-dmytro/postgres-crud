@@ -1,12 +1,9 @@
 package study.apach.model.services;
 
-import study.apach.model.db.DBManager;
 import study.apach.model.entities.Book;
 import study.apach.model.repositories.BookRepository;
 import study.apach.model.repositories.BookRepositoryImpl;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
