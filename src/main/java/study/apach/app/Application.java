@@ -35,19 +35,11 @@ public class Application {
                         }
                         break;
                     case "create":
-                        Book newBook  = new Book();
-                        newBook.setTitle(helper.getOperation("Enter a book title: "));
-                        newBook.setAuthor(helper.getOperation("Enter a book author: "));
-                        newBook.setCost(Double.parseDouble(helper.getOperation("Enter a book cost: ")));
-                        bookController.createBook(newBook);
+                        bookController.createBook(helper.getInputData());
                         input = "list";
                         break;
                     case "update":
-                        Book updateBook  = new Book();
-                        updateBook.setTitle(helper.getOperation("Enter a book title: "));
-                        updateBook.setAuthor(helper.getOperation("Enter a book author: "));
-                        updateBook.setCost(Double.parseDouble(helper.getOperation("Enter a book cost: ")));
-                        bookController.updateBook(currentId, updateBook);
+                        bookController.updateBook(currentId, helper.getInputData());
                         input = "list";
                         break;
                     case "delete":

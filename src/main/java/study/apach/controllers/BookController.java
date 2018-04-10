@@ -2,23 +2,28 @@ package study.apach.controllers;
 
 import study.apach.model.entities.Book;
 import study.apach.model.services.BookServiceImpl;
-import study.apach.model.services.EntityService;
+import study.apach.model.services.BookService;
 import study.apach.views.View;
 import study.apach.views.representable.ListView;
 import study.apach.views.representable.SingleObjectView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class BookController {
 
-    private EntityService<Book> bookService;
+    private BookService bookService;
 
     public BookController() {
-        this.bookService = new BookServiceImpl();
+        bookService = new BookServiceImpl();
+    }
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     public void getBooks() {
-        ArrayList<Book> books = (ArrayList<Book>) bookService.selectAllBooks();
+        ArrayList<Book> books = (ArrayList<Book>) bookService.selectAll();
         View<Book> listView = new View<>(new ListView<>());
         listView.setData(books);
         listView.render();
@@ -31,12 +36,12 @@ public class BookController {
         bookView.render();
     }
 
-    public void createBook(Book inputData) {
-        bookService.insertBook(inputData);
+    public void createBook(Map<String, Object> params) {
+        bookService.insertBook(params);
     }
 
-    public void updateBook(long id, Book inputData) {
-        bookService.updateBook(id, inputData);
+    public void updateBook(long id, Map<String, Object> params) {
+        bookService.updateBook(id, params);
     }
 
     public void deleteBook(long id) {
