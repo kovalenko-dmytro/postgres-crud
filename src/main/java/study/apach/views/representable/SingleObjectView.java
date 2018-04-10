@@ -4,11 +4,12 @@ import study.apach.model.entities.Book;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
-public class SingleObjectView<T> implements Representable<T> {
+public class SingleObjectView implements Representable {
 
     @Override
-    public void render(Collection<T> entities) {
+    public void render(List<Object> entities) {
 
         System.out.println("*****************************************");
         if (entities.isEmpty()) {

@@ -4,21 +4,22 @@ import study.apach.views.representable.Representable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-public class View<T> {
+public class View {
 
-    private Collection<T> data = new ArrayList<>();
-    private Representable<T> representable;
+    private List<Object> data = new ArrayList<>();
+    private Representable representable;
 
-    public View(Representable<T> representable) {
+    public View(Representable representable) {
         this.representable = representable;
     }
 
-    public void setData(T entity) {
+    public void setData(Object entity) {
         data.add(entity);
     }
 
-    public void setData(Collection<T> data) {
+    public void setData(List<Object> data) {
         this.data.addAll(data);
     }
 

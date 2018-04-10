@@ -4,9 +4,10 @@ import study.apach.model.entities.Book;
 import study.apach.views.View;
 
 import java.util.Collection;
+import java.util.List;
 
-public interface Representable<T> {
+public interface Representable {
 
-    void render(Collection<T> entities);
+    void render(List<Object> entities);
 
 }

@@ -4,11 +4,14 @@ import study.apach.model.entities.Book;
 import study.apach.views.View;
 
 import java.util.Collection;
+import java.util.List;
 
-public class ListView<T> implements Representable<T> {
+public class BookListView implements Representable {
 
     @Override
-    public void render(Collection<T> entities) {
+    public void render(List<Object> entities) {
+
+
         System.out.println("*****************************************");
         System.out.println("|            LIST OF BOOKS              |");
         System.out.println("*****************************************");
@@ -32,7 +35,5 @@ public class ListView<T> implements Representable<T> {
             System.out.println("|                                       |");
         }
         System.out.println("*****************************************");
-
     }
-
 }
