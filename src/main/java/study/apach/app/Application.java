@@ -26,14 +26,17 @@ public class Application {
                 switch (input) {
                     case "list":
                         bookController.getBooks();
-                        input = helper.getOperation("Back to index? [index], View book? [id]");
+                        input = helper.getOperation("Back to index? [index], " +
+                                                            "View book? [id]");
                         if ("index".equals(input)) {
                             mainController.index();
                             input = helper.getOperation("Enter operation: ");
                         } else {
                             currentId = Integer.parseInt(input);
                             bookController.viewBook(currentId);
-                            input = helper.getOperation("Update? [update], Delete? [delete], Back to list? [list]");
+                            input = helper.getOperation("Update? [update], " +
+                                                                "Delete? [delete], " +
+                                                                "Back to list? [list]");
                         }
                         break;
                     case "create":
