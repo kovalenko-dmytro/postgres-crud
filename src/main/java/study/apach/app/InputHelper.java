@@ -22,7 +22,7 @@ public class InputHelper {
 
     public Map<String, Object> getInputData() {
         Map<String, Object> inputData = new HashMap<>();
-        String input = null;
+        String input;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             System.out.println("Enter a book title: ");

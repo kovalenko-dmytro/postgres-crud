@@ -15,14 +15,17 @@ public class Application {
         mainController = new MainController();
     }
 
-    public void run () {
+    public void run() {
+
         mainController.index();
 
         String input = helper.getOperation("Enter operation: ");
         int currentId = 0;
 
-        if (!"exit".equals(input)) {
-            while (!"exit".equals(input)) {
+        while (!input.equals(CommandType.EXIT.getCommandType())) {
+
+            if (CommandType.contains(input)){
+
                 switch (input) {
                     case "list":
                         bookController.getBooks();
@@ -32,11 +35,16 @@ public class Application {
                             mainController.index();
                             input = helper.getOperation("Enter operation: ");
                         } else {
-                            currentId = Integer.parseInt(input);
-                            bookController.viewBook(currentId);
-                            input = helper.getOperation("Update? [update], " +
-                                                                "Delete? [delete], " +
-                                                                "Back to list? [list]");
+                            try {
+                                currentId = Integer.parseInt(input);
+                                bookController.viewBook(currentId);
+                                input = helper.getOperation("Update? [update], " +
+                                        "Delete? [delete], " +
+                                        "Back to list? [list]");
+                            } catch (NumberFormatException e) {
+                                System.out.println("WARNING!!! ID is not number! Enter correct ID");
+                                input = "list";
+                            }
                         }
                         break;
                     case "create":
@@ -52,7 +60,12 @@ public class Application {
                         input = "list";
                         break;
                 }
+
+            } else {
+                input = helper.getOperation("Operation name uncorrected. Enter operation: ");
             }
+
         }
+
     }
 }
