@@ -21,7 +21,8 @@ public class SingleObjectView implements Representable {
         } else {
 
             Book book = (Book) data.iterator().next();
-
+            System.out.println("Book: " + book.getTitle());
+            System.out.println("*****************************************");
             System.out.println("id: " + book.getId());
             System.out.println("title: " + book.getTitle());
             System.out.println("author: " + book.getAuthor());
