@@ -25,15 +25,20 @@ public class BookListView implements Representable {
             System.out.println("|       NO BOOKS ARE AVAILABLE          |");
             System.out.println("|                                       |");
             System.out.println("|                                       |");
+            System.out.println("*****************************************");
+            System.out.println();
+            System.out.println("Back to index? [index]");
         } else {
 
             books.forEach(book -> {
-                System.out.println("id: " + book.getId() +
-                                    " title: " + book.getTitle() +
-                                    " author: " + book.getAuthor() +
+                System.out.println("id: " + book.getId() + " | " +
+                                    " title: " + book.getTitle() + " | " +
+                                    " author: " + book.getAuthor() + " | " +
                                     " cost: " + book.getCost());
             });
             System.out.println();
+            System.out.println("Back to index? [index], " +
+                                "View book? [id]");
 
         }
     }
