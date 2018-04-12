@@ -24,7 +24,7 @@ public class Application {
 
         while (!input.equals(CommandType.EXIT.getCommandType())) {
 
-            if (CommandType.contains(input)){
+            if (CommandType.contains(input)) {
 
                 switch (input) {
                     case "list":
