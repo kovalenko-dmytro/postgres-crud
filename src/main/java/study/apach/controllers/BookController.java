@@ -47,4 +47,11 @@ public class BookController {
     public void deleteBook(long id) {
         bookService.deleteBook(id);
     }
+
+    public void getBooks(String categoryName) {
+        ArrayList<Book> books = (ArrayList<Book>) bookService.searchBooksByCategory(categoryName);
+        View listView = new View(new BookListView());
+        listView.setData(books);
+        listView.render();
+    }
 }

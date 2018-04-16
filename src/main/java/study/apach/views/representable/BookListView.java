@@ -34,6 +34,7 @@ public class BookListView implements Representable {
                 System.out.println("id: " + book.getId() + " | " +
                                     " title: " + book.getTitle() + " | " +
                                     " author: " + book.getAuthor() + " | " +
+                                    " category: " + book.getCategoryName() +
                                     " cost: " + book.getCost());
             });
             System.out.println();

@@ -9,19 +9,34 @@ import java.util.Collection;
 
 public class BookRepositoryImpl implements BookRepository {
 
-    private static final String SELECT_ALL_BOOKS = "SELECT id, title, author, cost FROM books";
-    private static final String SELECT_BY_ID = SELECT_ALL_BOOKS + " WHERE id = ?";
-    private static final String INSERT_BOOK = "INSERT INTO books (title, author, cost) VALUES (?, ?, ?)";
-    private static final String UPDATE_BOOK = "UPDATE books SET title = ?, author = ?, cost = ? WHERE id = ?";
-    private static final String DELETE_BOOK = "DELETE FROM books WHERE id = ?";
+    private static final String SELECT_ALL_BOOKS = "SELECT b.id, b.title, b.author, b.cost, c.name " +
+                                                    "FROM books b, categories c " +
+                                                    "WHERE c.id = b.category_id";
+
+    private static final String SELECT_BY_ID = SELECT_ALL_BOOKS + " AND b.id = ?";
+
+    private static final String INSERT_BOOK = "INSERT INTO books (title, author, cost, category_id) " +
+                                                "VALUES (?, ?, ?, ?)";
+
+    private static final String UPDATE_BOOK = "UPDATE books " +
+                                                "SET title = ?, author = ?, cost = ?, category_id = ? " +
+                                                "WHERE id = ?";
+
+    private static final String DELETE_BOOK = "DELETE FROM books " +
+                                                "WHERE id = ?";
+
+    private static final String SEARCH_BY_CATEGORY = "SELECT b.id, b.title, b.author, b.cost, c.name " +
+                                                        "FROM books b, categories c " +
+                                                        "WHERE c.id = ?";
 
     @Override
     public Collection<Book> findAll() {
-        Connection connection = DBManager.createConnection();
+
         ArrayList<Book> books = new ArrayList<>();
         Book book;
 
-        try (Statement selectAllStatement = connection.createStatement()) {
+        try (Connection connection = DBManager.createConnection();
+             Statement selectAllStatement = connection.createStatement()) {
 
             ResultSet rs = selectAllStatement.executeQuery(SELECT_ALL_BOOKS);
 
@@ -33,6 +48,7 @@ public class BookRepositoryImpl implements BookRepository {
                 book.setTitle(rs.getString("title"));
                 book.setAuthor(rs.getString("author"));
                 book.setCost(rs.getDouble("cost"));
+                book.setCategoryName(rs.getString("name"));
 
                 books.add(book);
             }
@@ -46,10 +62,11 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Book findOne(Long id) {
-        Connection connection = DBManager.createConnection();
+
         Book book = new Book();
 
-        try (PreparedStatement selectByIdStatement = connection.prepareStatement(SELECT_BY_ID)) {
+        try (Connection connection = DBManager.createConnection();
+             PreparedStatement selectByIdStatement = connection.prepareStatement(SELECT_BY_ID)) {
 
             selectByIdStatement.setLong(1, id);
             ResultSet rs = selectByIdStatement.executeQuery();
@@ -60,6 +77,7 @@ public class BookRepositoryImpl implements BookRepository {
                 book.setTitle(rs.getString("title"));
                 book.setAuthor(rs.getString("author"));
                 book.setCost(rs.getDouble("cost"));
+                book.setCategoryName(rs.getString("name"));
 
             }
 
@@ -73,17 +91,17 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public void save(Book entity) {
 
-        Connection connection = DBManager.createConnection();
-
-        try (PreparedStatement insertStatement = entity.getId() == 0
+        try (Connection connection = DBManager.createConnection();
+             PreparedStatement insertStatement = entity.getId() == 0
                 ? connection.prepareStatement(INSERT_BOOK)
                 : connection.prepareStatement(UPDATE_BOOK)) {
 
             insertStatement.setString(1, entity.getTitle());
             insertStatement.setString(2, entity.getAuthor());
             insertStatement.setDouble(3, entity.getCost());
+            insertStatement.setLong(4, entity.getCategoryId());
             if (entity.getId() != 0) {
-                insertStatement.setLong(4, entity.getId());
+                insertStatement.setLong(5, entity.getId());
             }
             insertStatement.execute();
 
@@ -95,9 +113,9 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void delete(Long id) {
-        Connection connection = DBManager.createConnection();
 
-        try (PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BOOK)) {
+        try (Connection connection = DBManager.createConnection();
+             PreparedStatement deleteStatement = connection.prepareStatement(DELETE_BOOK)) {
 
             deleteStatement.setLong(1, id);
             deleteStatement.execute();
@@ -105,5 +123,36 @@ public class BookRepositoryImpl implements BookRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Collection<Book> findByCategory(long categoryId) {
+
+        ArrayList<Book> books = new ArrayList<>();
+        Book book;
+
+        try (Connection connection = DBManager.createConnection();
+             PreparedStatement searchStatement = connection.prepareStatement(SEARCH_BY_CATEGORY)) {
+
+            searchStatement.setLong(1, categoryId);
+            ResultSet rs = searchStatement.executeQuery();
+
+            while (rs.next()) {
+
+                book = new Book();
+                book.setId(rs.getInt("id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setCost(rs.getDouble("cost"));
+                book.setCategoryName(rs.getString("name"));
+                books.add(book);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return books;
     }
 }

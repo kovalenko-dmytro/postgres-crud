@@ -8,6 +8,8 @@ public class Book {
     private String title;
     private String author;
     private double cost;
+    private long categoryId;
+    private String categoryName;
 
     public long getId() {
         return id;
@@ -41,6 +43,22 @@ public class Book {
         this.cost = cost;
     }
 
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,6 +83,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", cost=" + cost +
+                ", categoryName='" + categoryName + '\'' +
                 '}';
     }
 }

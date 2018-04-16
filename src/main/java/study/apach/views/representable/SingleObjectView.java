@@ -29,6 +29,7 @@ public class SingleObjectView implements Representable {
             System.out.println("id: " + book.getId());
             System.out.println("title: " + book.getTitle());
             System.out.println("author: " + book.getAuthor());
+            System.out.println("category: " + book.getCategoryName());
             System.out.println("cost: " + book.getCost());
             System.out.println();
             System.out.println("Update? [update], " +

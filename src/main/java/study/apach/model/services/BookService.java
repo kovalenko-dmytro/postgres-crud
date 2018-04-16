@@ -12,5 +12,6 @@ public interface BookService {
     void insertBook(Map<String, Object> params);
     void updateBook(long id, Map<String, Object> params);
     void deleteBook(long id);
+    Collection<Book> searchBooksByCategory(String categoryName);
 
 }

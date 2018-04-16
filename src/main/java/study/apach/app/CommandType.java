@@ -4,6 +4,7 @@ public enum CommandType {
     CREATE("create"),
     UPDATE("update"),
     DELETE("delete"),
+    SEARCH_BY_NAME("sbn"),
     LIST("list"),
     INDEX("index"),
     EXIT("exit");
