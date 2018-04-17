@@ -18,7 +18,7 @@ public class CategoryListView implements Representable {
 
         System.out.println("existing categories: ");
         for (Category category : categories) {
-            System.out.println(category.getName());
+            System.out.println(" - " + category.getName());
         }
     }
 }

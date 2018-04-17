@@ -51,6 +51,12 @@ public class BookServiceImpl implements BookService {
         bookRepository.delete(id);
     }
 
+    @Override
+    public Collection<Book> searchBooksByCategory(String categoryName) {
+        Category category = categoryRepository.findByName(categoryName);
+        return bookRepository.findByCategory(category.getId());
+    }
+
     private Book populateBookData(long id, Map<String, Object> params) {
 
         Book book = bookRepository.findOne(id) == null ? new Book() : bookRepository.findOne(id);
@@ -62,11 +68,5 @@ public class BookServiceImpl implements BookService {
         book.setCategoryId(categoryId);
 
         return book;
-    }
-
-    @Override
-    public Collection<Book> searchBooksByCategory(String categoryName) {
-        Category category = categoryRepository.findByName(categoryName);
-        return bookRepository.findByCategory(category.getId());
     }
 }

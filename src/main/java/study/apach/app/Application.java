@@ -11,6 +11,9 @@ public class Application {
     private BookController bookController;
     private CategoryController categoryController;
 
+    private int currentId = 0;
+    private String input;
+
     public Application() {
         helper = new InputHelper();
         mainController = new MainController();
@@ -22,8 +25,7 @@ public class Application {
 
         mainController.index();
 
-        String input = helper.getOperation("Enter operation: ");
-        int currentId = 0;
+        input = helper.getOperation("Enter operation: ");
 
         while (!input.equals(CommandType.EXIT.getCommandType())) {
 
@@ -33,19 +35,7 @@ public class Application {
                     case "list":
                         bookController.getBooks();
                         input = helper.getOperation("");
-                        if ("index".equals(input)) {
-                            mainController.index();
-                            input = helper.getOperation("Enter operation: ");
-                        } else {
-                            try {
-                                currentId = Integer.parseInt(input);
-                                bookController.viewBook(currentId);
-                                input = helper.getOperation("");
-                            } catch (NumberFormatException e) {
-                                System.out.println("WARNING!!! ID is not number! Enter correct ID");
-                                input = "list";
-                            }
-                        }
+                        indexOrId(input);
                         break;
                     case "create":
                         categoryController.getCategories();
@@ -66,19 +56,7 @@ public class Application {
                         input = helper.getOperation("Enter category: ");
                         bookController.getBooks(input);
                         input = helper.getOperation("");
-                        if ("index".equals(input)) {
-                            mainController.index();
-                            input = helper.getOperation("Enter operation: ");
-                        } else {
-                            try {
-                                currentId = Integer.parseInt(input);
-                                bookController.viewBook(currentId);
-                                input = helper.getOperation("");
-                            } catch (NumberFormatException e) {
-                                System.out.println("WARNING!!! ID is not number! Enter correct ID");
-                                input = "list";
-                            }
-                        }
+                        indexOrId(input);
                         break;
                 }
 
@@ -88,5 +66,21 @@ public class Application {
 
         }
 
+    }
+
+    private void indexOrId(String input) {
+        if ("index".equals(input)) {
+            mainController.index();
+            this.input = helper.getOperation("Enter operation: ");
+        } else {
+            try {
+                currentId = Integer.parseInt(input);
+                bookController.viewBook(currentId);
+                this.input = helper.getOperation("");
+            } catch (NumberFormatException e) {
+                System.out.println("WARNING!!! ID is not number! Enter correct ID");
+                this.input = "list";
+            }
+        }
     }
 }

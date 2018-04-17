@@ -27,7 +27,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     private static final String SEARCH_BY_CATEGORY = "SELECT b.id, b.title, b.author, b.cost, c.name " +
                                                         "FROM books b, categories c " +
-                                                        "WHERE c.id = ?";
+                                                        "WHERE b.category_id = ? AND c.id = b.category_id";
 
     @Override
     public Collection<Book> findAll() {
